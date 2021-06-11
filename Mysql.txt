@@ -1,0 +1,224 @@
+1. create a database called 'assignment' (Note please do the assignment tasks in this database)
+
+  Create database Assignments;
+  Use assaignments;
+  Database Changed
+
+2. Create a table called authors with the following columns
+authorid , name Create the tables from assignment_tables.sql and enter the records as specified in it.
+- choose appropriate datatypes for the columns
+	a) Insert the following data into the table
+		1, J K Rowling
+		2, Thomas Hardy
+		3, Oscar Wilde
+		4, Sidney Sheldon
+		5, Alistair Maclean
+		6, Jane Autsen
+  
+  Create table authors(
+  authorid INT
+  name varchar(255)
+  );
+  Query OK
+  Insert into authors values(1, 'J K Rowling')
+  Insert into authors values(2, 'Thomas Hardy')
+  Insert into authors values(3, 'Oscar Wilde')
+  Insert into authors values(4, 'Sidney Sheldon')
+  Insert into authors values(5, 'Alistair Maclean')
+  Insert into authors values(6, 'Jane Autsen')
+  Query OK
+	b) Add a couple of authors of your choice
+  
+  Insert into authors values(7, 'Austin Rock')
+  Insert into authors values(8, 'John Dane')
+  Query OK
+	c) Change 'Alistair Maclean' to 'Alastair McNeal'
+
+  update favauthors
+  set name='Alistair McNeal'
+  where authorid=5;
+  Query OK
+4. Create a table called Books with the following  columns
+bookid, title, authorid
+- choose appropriate datatypes for the columns
+ Create table books(
+ bookid INT,
+ title varchar(255),
+ authorid INT
+ );
+Query OK
+desc books;
+Query OK
+	a) Insert the following records
+
+		1,Harry Potter and the Philosopher's Stone,1
+		2,Harry Potter and the Chamber of Secrets,1
+		3,Harry Potter and the Half-Blood Prince,1
+		4,Harry Potter and the Goblet of Fire,1
+		5,Night Without End,5
+		6,Fear is the Key,5
+		7,Where Eagles Dare,5
+		8,Sense and Sensibility,6
+		9,Pride and Prejudice,6
+		10,Emma,6
+		11,Random Book,22
+    
+    Insert into books
+    values (1,'Harry Potter and the Philosopher's Stone',1)
+		(2,'Harry Potter and the Chamber of Secrets',1)
+		(3,'Harry Potter and the Half-Blood Prince',1)
+		(4,'Harry Potter and the Goblet of Fire',1)
+		(5,'Night Without End',5)
+		(6,'Fear is the Key',5)
+		(7,'Where Eagles Dare',5)
+		(8,'Sense and Sensibility',6)
+		(9,'Pride and Prejudice',6)
+		(10,'Emma',6)
+		(11,'Random Book',22);
+    Query OK  
+
+	b) Delete 'Random Book' from the table.
+  
+    Update books
+    set name=''
+    where bookid=11;
+    Query OK     
+
+5. Rename the table Books to Favbooks and Authors to Favauthors.
+   
+   Rename table books to Favbooks;
+   Rename table authors to favauthors;
+   Query OK
+
+ 6. select all employees in department 10 whose salary is greater than 3000. [table: employee]
+-select *from employee 
+where salary>3000 and deptno=10;
+Query ok 
+
+
+7. The grading of students based on the marks they have obtained is done as follows
+
+	40 to 50 -> Second Class
+	50 to 60 -> First Class
+	60 to 80 -> First Class
+	80 to 100 -> Distinctions
+
+	a. How many students  have graduated with first class?
+-SELECT COUNT(GRADE)
+WHERE GRADE='FIRST CLASS'
+FROM STUDENTS;
+
+12
+	b. How many students  have obtained distinction?  [table: students]
+-SELECT COUNT(GRADE)
+WHERE GRADE='DISTINCTION'
+FROM STUDENTS;
+
+11
+
+
+8.Get a list of city names from station with even ID numbers only. Exclude duplicates from your answer.[table: station]
+-SELECT * FROM STATION
+WHERE ID%2=0;
+QUERY OK 
+
+9. Find the difference between the total number of city entries in the table and the number of distinct city entries in the table. In other words, if N is the number of city entries in station, and N1 is the number of distinct city names in station, write a query to find the value of N-N1 from station.[table: station]
+-SELECT COUNT(CITY)-COUNT(DISTNICT CITY)
+FROM STATION
+QUERY OK
+
+10. a. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates. [Hint: Use RIGHT() / LEFT() methods ]
+-SELECT DISTINCT CITY FROM STATION 
+SUBTR(CITY,1,1) IN ('a','e','i','o','u');
+QUERY OK
+   b. Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+-SELECT DISTINCT CITY FROM STATION 
+WHERE CITY RLIKE '^[AEIOUaeiou].*[AEIOUaeiou]$';
+QUERY OK
+   c. Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+-SELECT DISTINCT CITY FROM STATION 
+WHERE CITY not RLIKE '^[AEIOUaeiou].*$';
+QUERY OK
+   d. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates. [table: station]
+-SELECT DISTINCT CITY FROM STATION 
+WHERE CITY NOT  RLIKE '^[AEIOUaeiou].*[AEIOUaeiou]$';
+QUERY OK
+
+11. Write a query that prints a list of employee names having a salary greater than $2000 per month who have been employed for less than 10 months. Sort your result by ascending emp_id. [table: emp]
+-SELECT first_name  FROM EMPLOYEE
+WHERE SALARY>2000 AND MONTHS<10
+ORDER BY emp_no;
+QUERY OK 
+12. How much money does the company spend every month on salaries for each department? [table: emp]
+-SELECT first_name,last_name,round(salary/12,2) as 'Monthly salary'
+where deptno=10
+from employee;
+QUERY OK
+
+-SELECT first_name,last_name,round(salary/12,2) as 'Monthly salary'
+where deptno=20
+from employee;
+QUERY OK
+
+-SELECT first_name,last_name,round(salary/12,2) as 'Monthly salary'
+where deptno=30
+from employee;
+QUERY OK
+
+-SELECT first_name,last_name,round(salary/12,2) as 'Monthly salary'
+where deptno=40
+from employee;
+QUERY OK
+
+-SELECT first_name,last_name,round(salary/12,2) as 'Monthly salary'
+where deptno=50
+from employee;
+QUERY OK
+
+Expected Result:
+
++-------------+--------+
+| sum(salary) | deptno |
++-------------+--------+
+|    30700.00 |     10 |
+|    13600.00 |     20 |
+|     2600.00 |     30 |
++-------------+--------+
+
+13. How many cities in the CITY table have a Population larger than 100000. [table: city]
+-SELECT COUNT(ID) FROM CITY
+WHERE POPULATION>100000;
+QUERY OK
+
+11
+
+
+
+14. What is the total population of California? [table: city]
+-SELECT SUM(POPULATION FROM CITY 
+WHERE DISTRICT ='CALIFORNIA';
+
+
+15. What is the average population of the districts in each country? [table: city]
+-SELECT COUNTRYCODE ,AVG(POPULATION) FROMCITY
+WHERE COUNTRYCODE='JPN';
+-SELECT COUNTRYCODE ,AVG(POPULATION) FROMCITY
+WHERE COUNTRYCODE='USA';
+-SELECT COUNTRYCODE ,AVG(POPULATION) FROMCITY
+WHERE COUNTRYCODE='NLD';
+Expected Result:
+
++-------------+-----------------+
+| countrycode | avg(population) |
++-------------+-----------------+
+| JPN         |     175839.2000 |
+| NLD         |     593321.0000 |
+| USA         |     120225.8750 |
++-------------+-----------------+
+
+
+
+
+
+
+
